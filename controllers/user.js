@@ -42,6 +42,9 @@ module.exports = {
 
     register: function (req, res) {
         var userParams = req.body.user;
+        console.log("user", userParams);
+        console.log('func ', createUser);
+
         createUser(userParams, function (err, user) {
             if (err) {
                 BaseCtrl.send(res, "", err);
@@ -79,15 +82,22 @@ module.exports = {
 };
 
 
-function createUser(params, callback) {
+var createUser = function (params, callback) {
+    console.log("USER MODEL", User);
+    console.log("USER MODEL", params);
+
     var user = new User();
     user.username = params.username;
     user.name = params.name;
+    user.password = MD5(params.password);
     user.email = params.email;
     user.description = params.description;
-    user.photo_url = param.photo_url;
+    user.photo_url = params.photo_url;
     user.github_url = params.github_url;
+    console.log("user model", params);
+
     user.save(function (err) {
+        console.log("err", err);
         if (err) {
             callback(err, null);
         }else {
