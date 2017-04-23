@@ -85,7 +85,7 @@ function createUser(params, callback) {
     user.name = params.name;
     user.email = params.email;
     user.description = params.description;
-    user.photo_url = param.photo_url;
+    user.photo_url = params.photo_url;
     user.github_url = params.github_url;
     user.save(function (err) {
         if (err) {
