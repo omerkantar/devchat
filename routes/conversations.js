@@ -29,9 +29,16 @@ router.get('/detail', function (req, res) {
     ConversationCtrl.detail(req, res);
 });
 
-
 router.post('/photo', function (req, res) {
     PhotoCtrl.uploadMessagePhoto(req, res);
+});
+
+router.get('/groups', function(req, res) {
+    ConversationCtrl.groups(req, res);
+});
+
+router.get('/chats', function(req, res) {
+    ConversationCtrl.chats(req, res);
 });
 
 module.exports = router;

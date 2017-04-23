@@ -3,3 +3,11 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  script.
+    var socket = io();
+    var obj = {username: 'abc'};
+    socket.emit('message', obj);
+    socket.on('message', function (data) {
+        console.log('data: ', data);
+    })
