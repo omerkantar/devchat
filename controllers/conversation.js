@@ -105,7 +105,7 @@ module.exports = {
 
 
     }
-}
+};
 
 
 function createConversation(con, me, callback) {
