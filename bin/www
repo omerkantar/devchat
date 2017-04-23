@@ -7,8 +7,6 @@
 var app = require('../app');
 var debug = require('debug')('gitchat:server');
 var http = require('http');
-var socketCtrl = require('../controllers/socket/socket');
-
 /**
  * Get port from environment and store in Express.
  */
@@ -21,7 +19,6 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-socketCtrl.server(server);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -30,6 +27,8 @@ socketCtrl.server(server);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+var socketCtrl = require('../controllers/socket/socket');
+socketCtrl.server(server);
 
 /**
  * Normalize a port into a number, string, or false.
