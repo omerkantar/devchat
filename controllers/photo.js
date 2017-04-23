@@ -10,16 +10,20 @@ var path = require('path');
 var multiparty = require('multiparty');
 var multer = require('multer');
 
-
+var BaseCtrl = require('./base');
 
 module.exports = {
 
-    uploadProfilePhoto: function (req, res) {
-
+    uploadProfilPhoto: function (req, res) {
+        savePhotoWithMulter(req, res, 'profil', function (photoUrl) {
+            BaseCtrl.send(res, {"photo_url": BASE_URL(photoUrl) });
+        })
     },
 
     uploadMessagePhoto: function (req, res) {
-
+        savePhotoWithMulter(req, res, 'message', function (photoUrl) {
+            BaseCtrl.send(res, {"photo_url": BASE_URL(photoUrl)});
+        })
     }
 }
 
@@ -27,7 +31,7 @@ module.exports = {
 
 function savePhotoWithMulter(req, res, fileName, callback) {
 
-    var pathName = path.join(__dirname + '/../public/uploads/' + fileName + '/');
+    var pathName = path.join(__dirname + '/../public/data/' + fileName + '/');
     var time = new Date();
     var photoPathName = time.getTime().toString();
     var photoUrl = BASE_URL(req) + fileName + '/';
@@ -68,6 +72,6 @@ function savePhotoWithMulter(req, res, fileName, callback) {
 
 }
 
-function BASE_URL(req) {
-    return  req.headers.host + '/static/uploads/';
+function BASE_URL(req, url) {
+    return  req.headers.host + '/static/data/' + url;
 }

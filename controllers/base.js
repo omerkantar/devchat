@@ -31,6 +31,17 @@ module.exports = {
         };
         var json = dataJSON(data, false, 400);
         return json;
+    },
+
+    findUserWithUsername: function (name, callback) {
+        var User = this.OBJECTS.User;
+        User.findOne({username: name})
+            .populate('conversations')
+            .populate('star_messages')
+            .exec(function(err, usr) {
+
+                callback(err, usr);
+            })
     }
 }
 
