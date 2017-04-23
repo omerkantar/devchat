@@ -1,33 +1,35 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'start' ]
-2 info using npm@3.10.8
-3 info using node@v6.9.1
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/Users/omer/.npm-packages/bin/npm',
+1 verbose cli   'start' ]
+2 info using npm@3.7.2
+3 info using node@v6.10.2
 4 verbose run-script [ 'prestart', 'start', 'poststart' ]
 5 info lifecycle gitchat@0.0.0~prestart: gitchat@0.0.0
 6 silly lifecycle gitchat@0.0.0~prestart: no script for prestart, continuing
 7 info lifecycle gitchat@0.0.0~start: gitchat@0.0.0
 8 verbose lifecycle gitchat@0.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle gitchat@0.0.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/mahmutakyol/Documents/git/devchat/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Library/TeX/texbin:/usr/local/mongodb/bin:/Users/mahmutakyol/.rvm/bin
-10 verbose lifecycle gitchat@0.0.0~start: CWD: /Users/mahmutakyol/Documents/git/devchat
+9 verbose lifecycle gitchat@0.0.0~start: PATH: /Users/omer/.npm-packages/lib/node_modules/npm/bin/node-gyp-bin:/Users/omer/Desktop/web/vue/GitChat/node_modules/.bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:/Users/omer/.swiftenv/shims:/Users/omer/.swiftenv/bin:/Users/omer/.npm-packages/bin:/Users/omer/.npm-packages/bin:/Users/omer/.npm-packages/bin:/Users/omer/.npm-packages/bin:/Users/omer/.npm-packages/bin:/Users/omer/.npm-packages/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Users/omer/.rvm/gems/ruby-2.2.4/bin:/Users/omer/.rvm/gems/ruby-2.2.4@global/bin:/Users/omer/.rvm/rubies/ruby-2.2.4/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/omer/.rvm/bin:/Users/omer/.rvm/bin:/Users/omer/.rvm/bin
+10 verbose lifecycle gitchat@0.0.0~start: CWD: /Users/omer/Desktop/web/vue/GitChat
 11 silly lifecycle gitchat@0.0.0~start: Args: [ '-c', 'node ./bin/www' ]
 12 silly lifecycle gitchat@0.0.0~start: Returned: code: 1  signal: null
 13 info lifecycle gitchat@0.0.0~start: Failed to exec start script
 14 verbose stack Error: gitchat@0.0.0 start: `node ./bin/www`
 14 verbose stack Exit status 1
-14 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
+14 verbose stack     at EventEmitter.<anonymous> (/Users/omer/.npm-packages/lib/node_modules/npm/lib/utils/lifecycle.js:239:16)
 14 verbose stack     at emitTwo (events.js:106:13)
 14 verbose stack     at EventEmitter.emit (events.js:191:7)
-14 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:40:14)
+14 verbose stack     at ChildProcess.<anonymous> (/Users/omer/.npm-packages/lib/node_modules/npm/lib/utils/spawn.js:24:14)
 14 verbose stack     at emitTwo (events.js:106:13)
 14 verbose stack     at ChildProcess.emit (events.js:191:7)
-14 verbose stack     at maybeClose (internal/child_process.js:877:16)
+14 verbose stack     at maybeClose (internal/child_process.js:886:16)
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 15 verbose pkgid gitchat@0.0.0
-16 verbose cwd /Users/mahmutakyol/Documents/git/devchat
-17 error Darwin 16.4.0
-18 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "start"
-19 error node v6.9.1
-20 error npm  v3.10.8
+16 verbose cwd /Users/omer/Desktop/web/vue/GitChat
+17 error Darwin 16.5.0
+18 error argv "/usr/local/bin/node" "/Users/omer/.npm-packages/bin/npm" "start"
+19 error node v6.10.2
+20 error npm  v3.7.2
 21 error code ELIFECYCLE
 22 error gitchat@0.0.0 start: `node ./bin/www`
 22 error Exit status 1

@@ -9,12 +9,10 @@ module.exports = {
     server: function (svr) {
         var io = socketio.listen(svr);
         io.on('connection', function(socket) {
-            console.log('b');
 
             //data = {conversation_id: id, username: 'foo', message: 'foo', photo_url: 'http//:...'}
             socket.on('message', function(data) {
                 //db kayıt işlemi yapılacak
-
                 MessageCtrl.message(data, function (json) {
                     socket.broadcast.emit(json);
                 });
@@ -30,7 +28,15 @@ module.exports = {
 
             //data = {usernmae: 'foo', conversation_id: id}
             socket.on('read', function(data){
-
+                MessageCtrl.read(data, function (obj) {
+                    socket.broadcast.emit(obj);
+                })
+            });
+            // data = {username: addUser, conversation: me}
+            socket.on('add user', function(data) {
+                ClientCtrl.addUser(data, function(json) {
+                    socket.broadcast.emit(json);
+                })
             });
         })
     }

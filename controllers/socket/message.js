@@ -2,7 +2,7 @@
  * Created by omer on 23.04.2017.
  */
 
-var BaseCtrl = require('./base');
+var BaseCtrl = require('../base');
 var User = BaseCtrl.OBJECTS.User;
 var Conversation = BaseCtrl.OBJECTS.Conversation;
 var Message = BaseCtrl.OBJECTS.Message;
@@ -13,6 +13,7 @@ module.exports = {
         //data = {conversation_id: id, username: 'foo', message: 'foo', photo_url: 'http//:...'}
 
         if (data) {
+
             if (data["conversation_id"] != undefined && data["conversation_id"] != null) {
 
                 BaseCtrl.findUserWithUsername(data.username, function (err, user) {
@@ -32,21 +33,37 @@ module.exports = {
                                     json = BaseCtrl.getResponsaData(data);
                                     con.messages.push(message);
                                     con.save(function (err) {
-
+                                        callback(json);
                                     })
                                 }
-                                callback(json);
                             })
                         })
                 })
 
-            }else {
-                all(callback)
             }
-        }else {
-            all(callback)
         }
     },
+
+    read: function(data, callback) {
+        //data = { username: message_id: }
+        if (data) {
+            if (data.username) {
+                BaseCtrl.findUserWithUsername(data.username, function(err, usr) {
+                    if (usr) {
+                        Message.findOne({_id: data.message_id})
+                            .exec(function(err, msg) {
+                                if (msg) {
+                                    msg.read_users.push(usr._id);
+                                    msg.save(function (err2) {
+                                        callback(msg);
+                                    })
+                                }
+                            });
+                    }
+                })
+            }
+        }
+    }
 
 };
 

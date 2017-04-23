@@ -2,8 +2,9 @@
  * Created by omer on 23.04.2017.
  */
 
-var BaseCtrl = require('./base');
+var BaseCtrl = require('../base');
 var User = BaseCtrl.OBJECTS.User;
+var Conversation = BaseCtrl.OBJECTS.Conversation;
 
 module.exports = {
 
@@ -25,6 +26,9 @@ module.exports = {
         }else {
             all(callback)
         }
+    },
+
+    addUser: function(data, callback) {
 
     }
 };
