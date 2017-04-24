@@ -70,13 +70,26 @@ module.exports = {
             })
     },
 
-    connect: function (data) {
-        // username
-        // status: busy, online, offline
+    me: function (req, res) {
+        BaseCtrl.findUserWithUsername(req.body.username, function(err, usr) {
+            if (err) {
+                BaseCtrl.error(res, "error", err);
+            }else {
+                BaseCtrl.send(res, usr);
+            };
+        });
     },
-
-    disconnect: function (data) {
-        // username
+    
+    detail: function (req, res) {
+        // username = req.body.username
+        BaseCtrl.findUserWithUsername(req.body.username, function (err, usr) {
+            if (err) {
+                BaseCtrl.error(res, "error", err);
+            }else {
+                var data = getOtherUserDetail(usr);
+                BaseCtrl.send(res, data);
+            };
+        });
     }
 
 };
@@ -104,4 +117,17 @@ var createUser = function (params, callback) {
             callback(null, user);
         }
     })
+}
+
+
+function getOtherUserDetail(user) {
+    return {
+        "username": user.username,
+        "name": user.name,
+        "description": user.description,
+        "photo_url": user.photo_url,
+        "github_url": user.github_url,
+        "status": user.status,
+        "conversation_count": user.conversations.length
+    }
 }

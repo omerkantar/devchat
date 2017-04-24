@@ -11,6 +11,14 @@ router.get('/all', function(req, res, next) {
   })
 });
 
+router.get('/me', function (req, res) {
+  UserCtrl.me(req, res);
+});
+
+router.get('/detail', function (req, res) {
+  UserCtrl.detail(req, res);
+});
+
 router.post('/register', function(req, res) {
   UserCtrl.register(req, res);
 });

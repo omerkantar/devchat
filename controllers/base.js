@@ -39,7 +39,6 @@ module.exports = {
             .populate('conversations')
             .populate('star_messages')
             .exec(function(err, usr) {
-
                 callback(err, usr);
             })
     }

@@ -9,7 +9,6 @@ var Conversation = BaseCtrl.OBJECTS.Conversation;
 module.exports = {
     me: function (req, res) {
         // username
-
         var user = req.body.username;
         BaseCtrl.findUserWithUsername(user, function (err, usr) {
             if (err) {
@@ -32,12 +31,19 @@ module.exports = {
                 BaseCtrl.error(res, "", err);
             }else {
                 createConversation(con, usr, function (err2, conversation) {
-                    if (err2) {
-                        BaseCtrl.error(res, "", err2);
+                    Conversation.findOne({_id: conversation._id})
+                        .populate('members')
+                        .exec(function (err, con2) {
+                            usersAddConversationId(con2.members, con2._id, function (err3, usrs) {
+                                if (err3) {
+                                    BaseCtrl.error(res, "", err3);
+                                }else {
+                                    BaseCtrl.send(res, conversation);
+                                }
+                            })
+                        })
 
-                    }else {
-                        BaseCtrl.send(res, conversation);
-                    }
+
                 });
             };
         })
@@ -72,21 +78,25 @@ module.exports = {
     },
 
     chats: function (req, res) {
-        Conversation.find({$where: "this.members.length == 2"})
-            .populate('members')
-            .populate('messages')
-            .exec(function (err, list) {
-                if (err) {
-                    BaseCtrl.error(res, "", err);
-                }else {
-                    BaseCtrl.send(res, list);
-                }
-            });
+        var name = req.body.username;
+        BaseCtrl.findUserWithUsername(name, function (usr) {
+            Conversation.find({$where: "this.members.length == 2"})
+                .where('members').in([usr._id])
+                .populate('members')
+                .populate('messages')
+                .exec(function (err, list) {
+                    if (err) {
+                        BaseCtrl.error(res, "", err);
+                    }else {
+                        BaseCtrl.send(res, list);
+                    }
+                });
+        })
+
     },
 
     detail: function (req, res) {
         // conversation_id
-
         var con = req.body.conversation_id;
 
         Conversation.findOne({_id: con})
@@ -101,11 +111,9 @@ module.exports = {
                 }else {
                     BaseCtrl.send(res, conversation);
                 }
-            })
-
-
+            });
     }
-}
+};
 
 
 function createConversation(con, me, callback) {
@@ -145,6 +153,33 @@ function getMemberIdsWithUsernames(list, names, callback) {
                 list.push(user._id);
                 list.splice(0, 1);
                 getMemberIdsWithUsernames(list, names, callback);
+            }
+        })
+};
+
+function usersAddConversationId(users, conid, callback) {
+
+    if (users.length == 0) {
+        callback (null, users);
+        return;
+    }
+    var first = names[0];
+
+    User.findOne({username: first.username})
+        .exec(function (err, user) {
+            if (err) {
+                callback(err, null);
+            }else {
+                user.conversations.push((conid));
+                user.save(function (err2) {
+                    if (err) {
+                        callback(err2)
+                    }else {
+                        users.splice(0, 1);
+                        getMemberIdsWithUsernames(users, conid, callback);
+                    }
+                })
+
             }
         })
 }

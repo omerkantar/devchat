@@ -7,7 +7,6 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-
 var MessageSchema = new Schema({
     author: { type: Schema.Types.ObjectId, ref: 'User' },
     read_users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
