@@ -86,7 +86,9 @@ module.exports = {
     },
 
     me: function (req, res) {
-        BaseCtrl.findUserWithUsername(req.body.username, function(err, usr) {
+        var username = req.query.username;
+        console.log("req me", req, username);
+        BaseCtrl.findUserWithUsername(username, function(err, usr) {
             if (err) {
                 BaseCtrl.error(res, "error", err);
             }else {
@@ -97,7 +99,7 @@ module.exports = {
     
     detail: function (req, res) {
         // username = req.body.username
-        BaseCtrl.findUserWithUsername(req.body.username, function (err, usr) {
+        BaseCtrl.findUserWithUsername(req.query.username, function (err, usr) {
             if (err) {
                 BaseCtrl.error(res, "error", err);
             }else {

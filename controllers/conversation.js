@@ -9,7 +9,7 @@ var Conversation = BaseCtrl.OBJECTS.Conversation;
 module.exports = {
     me: function (req, res) {
         // username
-        var user = req.body.username;
+        var user = req.query.username;
         BaseCtrl.findUserWithUsername(user, function (err, usr) {
             if (err) {
                 BaseCtrl.error(res, "", err);
@@ -78,7 +78,7 @@ module.exports = {
     },
 
     chats: function (req, res) {
-        var name = req.body.username;
+        var name = req.query.username;
         BaseCtrl.findUserWithUsername(name, function (usr) {
             Conversation.find({$where: "this.members.length == 2"})
                 .where('members').in([usr._id])
@@ -97,7 +97,7 @@ module.exports = {
 
     detail: function (req, res) {
         // conversation_id
-        var con = req.body.conversation_id;
+        var con = req.query.conversation_id;
 
         Conversation.findOne({_id: con})
             .populate('members')
