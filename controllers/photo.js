@@ -98,5 +98,5 @@ function savePhotoWithMulter(req, res, fileName, callback) {
 }
 
 function BASE_URL(req) {
-    return  req.headers.host + '/static/data/';
+    return  "http://" + req.headers.host + '/static/data/';
 }
