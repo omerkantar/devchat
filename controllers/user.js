@@ -37,14 +37,21 @@ module.exports = {
             BaseCtrl.error(res, "Bad request", null);
             return;
         }
-        User.findOne({username: userParams.username, password: MD5(userParams.password)})
-            .exec(function (err, user) {
-                if (err || user == null || user == undefined) {
-                    BaseCtrl.error(res, "login failure", err);
-                } else {
-                    BaseCtrl.send(res, obj);
-                }
-            })
+        try {
+
+            User.findOne({username: userParams.username, password: MD5(userParams.password)})
+                .exec(function (err, user) {
+                    if (err || user == null || user == undefined) {
+                        BaseCtrl.error(res, "login failure", err);
+                    } else {
+                        BaseCtrl.send(res, obj);
+                    }
+                })
+
+        }catch (e) {
+            BaseCtrl.error(res, "login failure", e);
+        }
+
 
     },
 
