@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/GitChat.iml" filepath="$PROJECT_DIR$/.idea/GitChat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/GitChat.iml" filepath="$PROJECT_DIR$/.idea/GitChat.iml" />
     </modules>
   </component>
 </project>

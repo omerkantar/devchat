@@ -12,10 +12,15 @@ module.exports = {
         User.find({})
             .exec(function (err, users) {
                 if (err) {
-                    var dataErr = BaseCtrl.getResponsaData("dont found users", err);
+                    var dataErr = BaseCtrl.getErrorData("dont found users", err);
                     callback(dataErr);
                 }else {
-                    var dataList = BaseCtrl.getErrorData(users);
+                    var list = new Array();
+                    for (var i = 0; i < users.length; i++) {
+                        var obj = getOtherUserDetail(users[i]);
+                        list.push(obj);
+                    }
+                    var dataList = BaseCtrl.getResponsaData(list);
                     callback(dataList);
                 }
             })
@@ -28,8 +33,11 @@ module.exports = {
         *  }
         * */
         var userParams = req.body.user;
-
-        User.findOne({username: userParams.username, password: MD5(userParams.password )})
+        if (userParams.username == undefined || userParams.password == undefined) {
+            BaseCtrl.error(res, "Bad request", null);
+            return;
+        }
+        User.findOne({username: userParams.username, password: MD5(userParams.password)})
             .exec(function (err, user) {
                 if (err || user == null || user == undefined) {
                     BaseCtrl.error(res, "login failure", err);
