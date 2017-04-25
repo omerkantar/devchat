@@ -44,7 +44,7 @@ module.exports = {
                     if (err || user == null || user == undefined) {
                         BaseCtrl.error(res, "login failure", err);
                     } else {
-                        BaseCtrl.send(res, obj);
+                        BaseCtrl.send(res, user);
                     }
                 })
 
