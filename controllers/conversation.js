@@ -185,7 +185,8 @@ function getMemberIdsWithUsernames(list, names, callback) {
                 callback(err, null);
             }else {
                 list.push(user);
-                names.splice(0, 1);
+                delete names[0];
+
                 getMemberIdsWithUsernames(list, names, callback);
             }
         });
@@ -209,7 +210,8 @@ function usersAddConversationId(users, conid, callback) {
                     if (err) {
                         callback(err2)
                     }else {
-                        users.splice(0, 1);
+                        delete users[0];
+
                         getMemberIdsWithUsernames(users, conid, callback);
                     }
                 })
