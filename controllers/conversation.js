@@ -112,8 +112,10 @@ module.exports = {
             .populate('members')
             .populate({
                 path: 'messages',
+                model: 'Message',
                 populate: {
-                    path: 'authors'
+                    path: 'authors',
+                    model: 'User'
                 }
             })
             .populate('admins')
