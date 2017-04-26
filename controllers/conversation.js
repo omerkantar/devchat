@@ -118,9 +118,6 @@ module.exports = {
                     model: 'User'
                 }
             })
-            .populate('admins')
-            .populate('reject_users')
-            .populate('invitation_users')
             .exec(function (err, conversation) {
                 if (err) {
                     BaseCtrl.error(res, "", err);
