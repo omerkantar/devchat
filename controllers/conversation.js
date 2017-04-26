@@ -114,7 +114,7 @@ module.exports = {
                 path: 'messages',
                 model: 'Message',
                 populate: {
-                    path: 'authors',
+                    path: 'author',
                     model: 'User'
                 }
             })
