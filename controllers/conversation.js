@@ -110,7 +110,12 @@ module.exports = {
 
         Conversation.findOne({_id: con})
             .populate('members')
-            .populate('messages', 'author')
+            .populate({
+                path: 'messages',
+                populate: {
+                    path: 'authors'
+                }
+            })
             .populate('admins')
             .populate('reject_users')
             .populate('invitation_users')
