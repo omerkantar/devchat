@@ -10,7 +10,7 @@ var Schema = mongoose.Schema;
 var MessageSchema = new Schema({
     author: { type: Schema.Types.ObjectId, ref: 'User' },
     read_users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    text: { type: String, required: true },
+    text: { type: String, required: false },
     create_at: { type: Date, default: Date.now }
 });
 
