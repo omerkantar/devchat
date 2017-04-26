@@ -101,7 +101,7 @@ module.exports = {
 
         Conversation.findOne({_id: con})
             .populate('members')
-            .populate('messages')
+            .populate('messages', 'author')
             .populate('admins')
             .populate('reject_users')
             .populate('invitation_users')
@@ -126,11 +126,14 @@ function createConversation(con, me, callback) {
 
     var hasMe = con.members.indexOf(me.username);
     if (hasMe == undefined || hasMe == null || hasMe < 0) {
-        con.members.push(me.username);
+        con.members.push(me._id);
     }
 
     getMemberIdsWithUsernames(null, con.members, function (err, list) {
-        conversation.members = list;
+        for (var i = 0; i < list.length; i ++) {
+            var usr = list[i];
+            conversation.members.push(usr._id);
+        }
         conversation.admins.push(me._id);
         conversation.save(function (err2) {
             callback(err2, conversation);
@@ -155,7 +158,7 @@ function getMemberIdsWithUsernames(list, names, callback) {
             if (err) {
                 callback(err, null);
             }else {
-                list.push(user._id);
+                list.push(user);
                 list.splice(0, 1);
                 getMemberIdsWithUsernames(list, names, callback);
             }
