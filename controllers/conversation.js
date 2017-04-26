@@ -79,18 +79,22 @@ module.exports = {
 
     chats: function (req, res) {
         var name = req.query.username;
-        BaseCtrl.findUserWithUsername(name, function (usr) {
-            Conversation.find({$where: "this.members.length == 2"})
-                .where('members').in([usr._id])
-                .populate('members')
-                .populate('messages')
-                .exec(function (err, list) {
-                    if (err) {
-                        BaseCtrl.error(res, "", err);
-                    }else {
-                        BaseCtrl.send(res, list);
-                    }
-                });
+        BaseCtrl.findUserWithUsername(name, function (err, usr) {
+            if (err) {
+                BaseCtrl.error(res, "", err);
+            }else {
+                Conversation.find({$where: "this.members.length == 2"})
+                    .where('members').in([usr._id])
+                    .populate('members')
+                    .populate('messages')
+                    .exec(function (err, list) {
+                        if (err) {
+                            BaseCtrl.error(res, "", err);
+                        }else {
+                            BaseCtrl.send(res, list);
+                        }
+                    });
+            }
         })
 
     },
