@@ -131,12 +131,20 @@ function createConversation(con, me, callback) {
     // con : members = [usernames]
 
     var conversation = new Conversation();
-    conversation.name = con.name;
-    conversation.name = con.name;
-    conversation.description = con.description;
-    conversation.photo_url = con.photo_url;
+
+    if (con.name) {
+        conversation.name = con.name;
+    }
+    if (con.description) {
+        conversation.description = con.description;
+    }
+    if (con.photo_url) {
+        conversation.photo_url = con.photo_url;
+    }
+
 
     var hasMe = con.members.indexOf(me.username);
+
     if (hasMe == undefined || hasMe == null || hasMe < 0) {
         con.members.push(me._id);
     }
@@ -159,7 +167,7 @@ function getMemberIdsWithUsernames(list, names, callback) {
     if (list == null || list == undefined) {
         list = new Array();
     }
-    if (list.length == 0) {
+    if (names.length == 0) {
         callback (null, list);
         return;
     }
@@ -171,7 +179,7 @@ function getMemberIdsWithUsernames(list, names, callback) {
                 callback(err, null);
             }else {
                 list.push(user);
-                list.splice(0, 1);
+                names.splice(0, 1);
                 getMemberIdsWithUsernames(list, names, callback);
             }
         })
@@ -183,7 +191,7 @@ function usersAddConversationId(users, conid, callback) {
         callback (null, users);
         return;
     }
-    var first = names[0];
+    var first = users[0];
 
     User.findOne({username: first.username})
         .exec(function (err, user) {
