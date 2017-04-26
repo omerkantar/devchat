@@ -14,7 +14,18 @@ module.exports = {
             if (err) {
                 BaseCtrl.error(res, "", err);
             }else {
-                BaseCtrl.send(res, usr.conversations);
+
+                Conversation.find({})
+                    .where('members').in([usr._id])
+                    .populate('messages', 'author')
+                    .populate('members')
+                    .exec(function (err2, list) {
+                        if (err2) {
+                            BaseCtrl.error(res, "", err2);
+                        }else {
+                            BaseCtrl.send(res, list);
+                        }
+                    });
             }
         })
     },
@@ -192,18 +203,3 @@ function getMemberIdsWithUsernames(list, names, callback) {
         });
 };
 
-function usersAddConversationId(users, conid, callback) {
-
-    if (users.length == 0) {
-        callback (null, conid);
-        return;
-    }
-    var first = users[0];
-
-    first.conversations.push(conid)
-    first.save(function (err) {
-        delete users[0];
-        usersAddConversationId(users, conid, callback);
-    });
-
-}
