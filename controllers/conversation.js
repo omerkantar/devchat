@@ -150,14 +150,19 @@ function createConversation(con, me, callback) {
     }
 
     getMemberIdsWithUsernames(null, con.members, function (err, list) {
-        for (var i = 0; i < list.length; i ++) {
-            var usr = list[i];
-            conversation.members.push(usr._id);
+        if (err) {
+            console.log("getMemberIdsWithUsernames err ", err);
+        }else if (list) {
+            console.log("getMemberIdsWithUsernames list ", list);
+            for (var i = 0; i < list.length; i++) {
+                var usr = list[i];
+                conversation.members.push(usr._id);
+            }
+            conversation.admins.push(me._id);
+            conversation.save(function (err2) {
+                callback(err2, conversation);
+            });
         }
-        conversation.admins.push(me._id);
-        conversation.save(function (err2) {
-            callback(err2, conversation);
-        });
     });
 
 }
