@@ -27,6 +27,7 @@ module.exports = {
         var me = req.body.username;
 
         try {
+            console.log("conversation save ", con, me);
             BaseCtrl.findUserWithUsername(me, function (err, usr){
                 if (err) {
                     BaseCtrl.error(res, "", err);
@@ -128,6 +129,7 @@ module.exports = {
 function createConversation(con, me, callback) {
     // me = User
     // con : members = [usernames]
+
     var conversation = new Conversation();
     conversation.name = con.name;
     conversation.name = con.name;
