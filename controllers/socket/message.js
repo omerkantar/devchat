@@ -11,13 +11,13 @@ module.exports = {
 
     message: function (data, callback) {
         //data = {conversation_id: id, username: 'foo', message: 'foo', photo_url: 'http//:...'}
-        console.log("message", message);
+        console.log("message", data);
 
         if (data) {
-
             if (data["conversation_id"] != undefined && data["conversation_id"] != null) {
 
                 BaseCtrl.findUserWithUsername(data.username, function (err, user) {
+                    console.log("err & user", err, user);
 
                     Conversation.findOne({_id: data.conversation_id})
                         .exec(function (err2, con) {
