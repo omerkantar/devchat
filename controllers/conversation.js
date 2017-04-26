@@ -26,27 +26,32 @@ module.exports = {
         var con = req.body.conversation;
         var me = req.body.username;
 
-        BaseCtrl.findUserWithUsername(me, function (err, usr){
-            if (err) {
-                BaseCtrl.error(res, "", err);
-            }else {
-                createConversation(con, usr, function (err2, conversation) {
-                    Conversation.findOne({_id: conversation._id})
-                        .populate('members')
-                        .exec(function (err, con2) {
-                            usersAddConversationId(con2.members, con2._id, function (err3, usrs) {
-                                if (err3) {
-                                    BaseCtrl.error(res, "", err3);
-                                }else {
-                                    BaseCtrl.send(res, conversation);
-                                }
+        try {
+            BaseCtrl.findUserWithUsername(me, function (err, usr){
+                if (err) {
+                    BaseCtrl.error(res, "", err);
+                }else {
+                    createConversation(con, usr, function (err2, conversation) {
+                        Conversation.findOne({_id: conversation._id})
+                            .populate('members')
+                            .exec(function (err, con2) {
+                                usersAddConversationId(con2.members, con2._id, function (err3, usrs) {
+                                    if (err3) {
+                                        BaseCtrl.error(res, "", err3);
+                                    }else {
+                                        BaseCtrl.send(res, conversation);
+                                    }
+                                })
                             })
-                        })
 
 
-                });
-            };
-        })
+                    });
+                };
+            });
+        }catch (err) {
+            BaseCtrl.error(res, "", err);
+        }
+
     },
 
     all: function (req, res) {
@@ -124,6 +129,7 @@ function createConversation(con, me, callback) {
     // me = User
     // con : members = [usernames]
     var conversation = new Conversation();
+    conversation.name = con.name;
     conversation.name = con.name;
     conversation.description = con.description;
     conversation.photo_url = con.photo_url;
