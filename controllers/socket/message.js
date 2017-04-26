@@ -11,6 +11,7 @@ module.exports = {
 
     message: function (data, callback) {
         //data = {conversation_id: id, username: 'foo', message: 'foo', photo_url: 'http//:...'}
+        console.log("message", message);
 
         if (data) {
 
