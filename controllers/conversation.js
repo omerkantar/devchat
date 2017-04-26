@@ -124,6 +124,11 @@ function createConversation(con, me, callback) {
     conversation.description = con.description;
     conversation.photo_url = con.photo_url;
 
+    var hasMe = con.members.indexOf(me.username);
+    if (hasMe == undefined || hasMe == null || hasMe < 0) {
+        con.members.push(me.username);
+    }
+
     getMemberIdsWithUsernames(null, con.members, function (err, list) {
         conversation.members = list;
         conversation.admins.push(me._id);

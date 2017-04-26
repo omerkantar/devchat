@@ -24,6 +24,7 @@ module.exports = {
                             var message = new Message();
                             message.author = user._id;
                             message.text = data.message;
+                            message.photo_url = data.photo_url;
                             message.save(function (err3) {
                                 var json;
                                 if (err3) {
