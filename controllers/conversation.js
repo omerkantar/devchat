@@ -163,6 +163,8 @@ function createConversation(con, me, callback) {
                 callback(err2, conversation);
             });
         }
+
+        console.log()
     });
 
 }
@@ -177,6 +179,7 @@ function getMemberIdsWithUsernames(list, names, callback) {
         return;
     }
     var first = names[0];
+    console.log("username", first);
 
     User.findOne({username: first})
         .exec(function (err, user) {
@@ -184,8 +187,8 @@ function getMemberIdsWithUsernames(list, names, callback) {
                 callback(err, null);
             }else {
                 list.push(user);
-                delete names[0];
-
+                names.splice(0, 1);
+                console.log("user", user);
                 getMemberIdsWithUsernames(list, names, callback);
             }
         });
