@@ -142,11 +142,10 @@ function createConversation(con, me, callback) {
         conversation.photo_url = con.photo_url;
     }
 
-
     var hasMe = con.members.indexOf(me.username);
 
     if (hasMe == undefined || hasMe == null || hasMe < 0) {
-        con.members.push(me._id);
+        conversation.members.push(me._id);
     }
 
     getMemberIdsWithUsernames(null, con.members, function (err, list) {
@@ -156,7 +155,9 @@ function createConversation(con, me, callback) {
             console.log("getMemberIdsWithUsernames list ", list);
             for (var i = 0; i < list.length; i++) {
                 var usr = list[i];
-                conversation.members.push(usr._id);
+                if (usr._id) {
+                    conversation.members.push(usr._id);
+                }
             }
             conversation.admins.push(me._id);
             conversation.save(function (err2) {
@@ -187,7 +188,7 @@ function getMemberIdsWithUsernames(list, names, callback) {
                 names.splice(0, 1);
                 getMemberIdsWithUsernames(list, names, callback);
             }
-        })
+        });
 };
 
 function usersAddConversationId(users, conid, callback) {
