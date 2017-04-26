@@ -15,6 +15,7 @@ module.exports = {
                 //db kayıt işlemi yapılacak
                 console.log("message data", data);
                 MessageCtrl.message(data, function (json) {
+                    console.log('message', json);
                     socket.broadcast.emit(json);
                 });
             });

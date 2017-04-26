@@ -35,6 +35,7 @@ module.exports = {
                                     json = BaseCtrl.getResponsaData(data);
                                     con.messages.push(message);
                                     con.save(function (err) {
+
                                         callback(json);
                                     })
                                 }

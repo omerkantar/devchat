@@ -41,7 +41,7 @@ module.exports = {
 
             User.findOne({username: userParams.username, password: MD5(userParams.password)})
                 .exec(function (err, user) {
-                    if (err || user == null || user == undefined) {
+                    if (err) {
                         BaseCtrl.error(res, "login failure", err);
                     } else {
                         BaseCtrl.send(res, user);
@@ -49,7 +49,9 @@ module.exports = {
                 })
 
         }catch (e) {
-            BaseCtrl.error(res, "login failure", e);
+            if (e) {
+                BaseCtrl.error(res, "login failure", e);
+            }
         }
 
 
