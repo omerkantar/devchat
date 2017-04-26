@@ -44,19 +44,7 @@ module.exports = {
                     BaseCtrl.error(res, "", err);
                 }else {
                     createConversation(con, usr, function (err2, conversation) {
-                        Conversation.findOne({_id: conversation._id})
-                            .populate('members')
-                            .exec(function (err, con2) {
-                                usersAddConversationId(con2.members, conversation._id, function (err3, next) {
-                                    if (err3) {
-                                        BaseCtrl.error(res, "", err3);
-                                    }else {
-                                        BaseCtrl.send(res, conversation);
-                                    }
-                                })
-                            })
-
-
+                        BaseCtrl.send(res, conversation);
                     });
                 };
             });
