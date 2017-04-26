@@ -36,7 +36,7 @@ module.exports = {
                         Conversation.findOne({_id: conversation._id})
                             .populate('members')
                             .exec(function (err, con2) {
-                                usersAddConversationId(con2.members, con2._id, function (err3, usrs) {
+                                usersAddConversationId(con2.members, conversation._id, function (err3, next) {
                                     if (err3) {
                                         BaseCtrl.error(res, "", err3);
                                     }else {
@@ -195,27 +195,15 @@ function getMemberIdsWithUsernames(list, names, callback) {
 function usersAddConversationId(users, conid, callback) {
 
     if (users.length == 0) {
-        callback (null, users);
+        callback (null, conid);
         return;
     }
     var first = users[0];
 
-    User.findOne({username: first.username})
-        .exec(function (err, user) {
-            if (err) {
-                callback(err, null);
-            }else {
-                user.conversations.push((conid));
-                user.save(function (err2) {
-                    if (err) {
-                        callback(err2)
-                    }else {
-                        delete users[0];
+    first.conversations.push(conid)
+    first.save(function (err) {
+        delete users[0];
+        usersAddConversationId(users, conid, callback);
+    });
 
-                        getMemberIdsWithUsernames(users, conid, callback);
-                    }
-                })
-
-            }
-        })
 }
